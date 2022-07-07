@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x828313A3234E59FE",
+      "boundary_crc": "0xB40D2763C3F1B8DE",
       "device": "xczu19eg-ffvc1760-2-i",
       "gen_directory": "../../../../sidewinder.gen/sources_1/bd/design_1",
       "name": "design_1",
@@ -20,13 +20,13 @@
       },
       "system_reset_100mhz": "",
       "clock_buffer_100mhz": "",
-      "controller_0": "",
+      "logic_controller": "",
       "system_interconnect": {
         "s00_couplers": {
           "auto_cc": ""
         }
       },
-      "ddr_control_0": ""
+      "ddr_control": ""
     },
     "interface_ports": {
       "ddr4": {
@@ -35,8 +35,8 @@
         "vlnv": "xilinx.com:interface:ddr4_rtl:1.0",
         "parameters": {
           "AXI_ARBITRATION_SCHEME": {
-            "value": "RD_PRI_REG",
-            "value_src": "default"
+            "value": "TDM",
+            "value_src": "default_prop"
           },
           "BURST_LENGTH": {
             "value": "8",
@@ -47,12 +47,12 @@
             "value_src": "default"
           },
           "CAS_LATENCY": {
-            "value": "17",
-            "value_src": "default"
+            "value": "11",
+            "value_src": "default_prop"
           },
           "CAS_WRITE_LATENCY": {
-            "value": "16",
-            "value_src": "default"
+            "value": "11",
+            "value_src": "default_prop"
           },
           "CS_ENABLED": {
             "value": "true",
@@ -63,20 +63,20 @@
             "value_src": "default"
           },
           "DATA_MASK_ENABLED": {
-            "value": "NO_DM_NO_DBI",
-            "value_src": "default"
+            "value": "true",
+            "value_src": "default_prop"
           },
           "DATA_WIDTH": {
-            "value": "72",
-            "value_src": "default"
+            "value": "8",
+            "value_src": "default_prop"
           },
           "MEMORY_PART": {
             "value": "DDR4_CUSTOM",
             "value_src": "default"
           },
           "MEMORY_TYPE": {
-            "value": "SODIMMs",
-            "value_src": "default"
+            "value": "COMPONENTS",
+            "value_src": "default_prop"
           },
           "MEM_ADDR_MAP": {
             "value": "ROW_COLUMN_BANK",
@@ -87,8 +87,8 @@
             "value_src": "default"
           },
           "TIMEPERIOD_PS": {
-            "value": "938",
-            "value_src": "default"
+            "value": "1250",
+            "value_src": "default_prop"
           }
         }
       },
@@ -105,6 +105,21 @@
             "value": "333000000"
           }
         }
+      },
+      "clk_100mhz": {
+        "mode": "Slave",
+        "vlnv_bus_definition": "xilinx.com:interface:diff_clock:1.0",
+        "vlnv": "xilinx.com:interface:diff_clock_rtl:1.0",
+        "parameters": {
+          "CAN_DEBUG": {
+            "value": "false",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "100000000",
+            "value_src": "default"
+          }
+        }
       }
     },
     "ports": {
@@ -118,62 +133,6 @@
           },
           "POLARITY": {
             "value": "ACTIVE_LOW",
-            "value_src": "default"
-          }
-        }
-      },
-      "sysclk100_p": {
-        "type": "clk",
-        "direction": "I",
-        "left": "0",
-        "right": "0",
-        "parameters": {
-          "CLK_DOMAIN": {
-            "value": "design_1_IBUF_DS_P_0",
-            "value_src": "default"
-          },
-          "FREQ_HZ": {
-            "value": "100000000",
-            "value_src": "default"
-          },
-          "FREQ_TOLERANCE_HZ": {
-            "value": "0",
-            "value_src": "default"
-          },
-          "INSERT_VIP": {
-            "value": "0",
-            "value_src": "default"
-          },
-          "PHASE": {
-            "value": "0.0",
-            "value_src": "default"
-          }
-        }
-      },
-      "sysclk100_n": {
-        "type": "clk",
-        "direction": "I",
-        "left": "0",
-        "right": "0",
-        "parameters": {
-          "CLK_DOMAIN": {
-            "value": "design_1_IBUF_DS_N_0",
-            "value_src": "default"
-          },
-          "FREQ_HZ": {
-            "value": "100000000",
-            "value_src": "default"
-          },
-          "FREQ_TOLERANCE_HZ": {
-            "value": "0",
-            "value_src": "default"
-          },
-          "INSERT_VIP": {
-            "value": "0",
-            "value_src": "default"
-          },
-          "PHASE": {
-            "value": "0.0",
             "value_src": "default"
           }
         }
@@ -513,11 +472,11 @@
         "xci_path": "ip/design_1_util_ds_buf_0_0/design_1_util_ds_buf_0_0.xci",
         "inst_hier_path": "clock_buffer_100mhz"
       },
-      "controller_0": {
+      "logic_controller": {
         "vlnv": "xilinx.com:module_ref:controller:1.0",
         "xci_name": "design_1_controller_0_0",
         "xci_path": "ip/design_1_controller_0_0/design_1_controller_0_0.xci",
-        "inst_hier_path": "controller_0",
+        "inst_hier_path": "logic_controller",
         "reference_info": {
           "ref_type": "hdl",
           "ref_name": "controller",
@@ -630,8 +589,8 @@
                 "value_src": "ip_prop"
               },
               "CLK_DOMAIN": {
-                "value": "design_1_IBUF_DS_N_0",
-                "value_src": "ip_prop"
+                "value": "design_1_util_ds_buf_0_0_IBUF_OUT",
+                "value_src": "default_prop"
               }
             },
             "address_space_ref": "M_AXI",
@@ -848,8 +807,8 @@
                 "value_src": "ip_prop"
               },
               "CLK_DOMAIN": {
-                "value": "design_1_IBUF_DS_N_0",
-                "value_src": "ip_prop"
+                "value": "design_1_util_ds_buf_0_0_IBUF_OUT",
+                "value_src": "default_prop"
               }
             }
           },
@@ -1090,11 +1049,11 @@
           }
         }
       },
-      "ddr_control_0": {
+      "ddr_control": {
         "vlnv": "xilinx.com:module_ref:ddr_control:1.0",
         "xci_name": "design_1_ddr_control_0_1",
         "xci_path": "ip/design_1_ddr_control_0_1/design_1_ddr_control_0_1.xci",
-        "inst_hier_path": "ddr_control_0",
+        "inst_hier_path": "ddr_control",
         "reference_info": {
           "ref_type": "hdl",
           "ref_name": "ddr_control",
@@ -1207,8 +1166,8 @@
                 "value_src": "ip_prop"
               },
               "CLK_DOMAIN": {
-                "value": "design_1_IBUF_DS_N_0",
-                "value_src": "ip_prop"
+                "value": "design_1_util_ds_buf_0_0_IBUF_OUT",
+                "value_src": "default_prop"
               }
             },
             "address_space_ref": "M_AXI",
@@ -1337,8 +1296,8 @@
                 "value_src": "ip_prop"
               },
               "CLK_DOMAIN": {
-                "value": "design_1_IBUF_DS_N_0",
-                "value_src": "ip_prop"
+                "value": "design_1_util_ds_buf_0_0_IBUF_OUT",
+                "value_src": "default_prop"
               }
             }
           },
@@ -1370,9 +1329,15 @@
           "ddr4_ram/C0_SYS_CLK"
         ]
       },
+      "CLK_IN_D_0_1": {
+        "interface_ports": [
+          "clk_100mhz",
+          "clock_buffer_100mhz/CLK_IN_D"
+        ]
+      },
       "controller_0_M_AXI": {
         "interface_ports": [
-          "controller_0/M_AXI",
+          "logic_controller/M_AXI",
           "ddr4_axi_interconnect/S00_AXI"
         ]
       },
@@ -1390,7 +1355,7 @@
       },
       "ddr_control_0_M_AXI": {
         "interface_ports": [
-          "ddr_control_0/M_AXI",
+          "ddr_control/M_AXI",
           "system_interconnect/S00_AXI"
         ]
       },
@@ -1402,18 +1367,6 @@
       }
     },
     "nets": {
-      "IBUF_DS_N_0_1": {
-        "ports": [
-          "sysclk100_n",
-          "clock_buffer_100mhz/IBUF_DS_N"
-        ]
-      },
-      "IBUF_DS_P_0_1": {
-        "ports": [
-          "sysclk100_p",
-          "clock_buffer_100mhz/IBUF_DS_P"
-        ]
-      },
       "ddr4_ram_c0_ddr4_ui_clk": {
         "ports": [
           "ddr4_ram/c0_ddr4_ui_clk",
@@ -1452,8 +1405,8 @@
       "system_reset_100mhz_peripheral_aresetn": {
         "ports": [
           "system_reset_100mhz/peripheral_aresetn",
-          "controller_0/M_AXI_ARESETN",
-          "ddr_control_0/M_AXI_ARESETN",
+          "logic_controller/M_AXI_ARESETN",
+          "ddr_control/M_AXI_ARESETN",
           "system_interconnect/ARESETN",
           "system_interconnect/S00_ARESETN"
         ]
@@ -1468,17 +1421,17 @@
         "ports": [
           "clock_buffer_100mhz/IBUF_OUT",
           "system_reset_100mhz/slowest_sync_clk",
-          "controller_0/M_AXI_ACLK",
+          "logic_controller/M_AXI_ACLK",
           "ddr4_axi_interconnect/ACLK",
           "ddr4_axi_interconnect/S00_ACLK",
-          "ddr_control_0/M_AXI_ACLK",
+          "ddr_control/M_AXI_ACLK",
           "system_interconnect/S00_ACLK",
           "system_interconnect/ACLK"
         ]
       }
     },
     "addressing": {
-      "/controller_0": {
+      "/logic_controller": {
         "address_spaces": {
           "M_AXI": {
             "segments": {
@@ -1491,7 +1444,7 @@
           }
         }
       },
-      "/ddr_control_0": {
+      "/ddr_control": {
         "address_spaces": {
           "M_AXI": {
             "segments": {
