@@ -1,0 +1,58 @@
+{
+   "ActiveEmotionalView":"No Loops",
+   "Default View_ScaleFactor":"1.0",
+   "Default View_TopLeft":"-317,-111",
+   "DisplayTieOff":"1",
+   "ExpandedHierarchyInLayout":"",
+   "No Loops_ExpandedHierarchyInLayout":"",
+   "No Loops_Layout":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace port ddr4 -pg 1 -lvl 6 -x 1920 -y 140 -defaultsOSRD
+preplace port ddr4_refclk -pg 1 -lvl 0 -x -50 -y 140 -defaultsOSRD
+preplace port port-id_pb_rst_n -pg 1 -lvl 0 -x -50 -y 360 -defaultsOSRD
+preplace portBus sysclk100_p -pg 1 -lvl 0 -x -50 -y 320 -defaultsOSRD
+preplace portBus sysclk100_n -pg 1 -lvl 0 -x -50 -y 340 -defaultsOSRD
+preplace inst ddr4_ram -pg 1 -lvl 5 -x 1710 -y 140 -swap {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 35 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 18 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 77 78 80 79 76} -defaultsOSRD -pinDir C0_SYS_CLK left -pinY C0_SYS_CLK 0L -pinDir C0_DDR4 right -pinY C0_DDR4 0R -pinDir C0_DDR4_S_AXI_CTRL left -pinY C0_DDR4_S_AXI_CTRL 360L -pinDir C0_DDR4_S_AXI left -pinY C0_DDR4_S_AXI 60L -pinDir c0_init_calib_complete right -pinY c0_init_calib_complete 20R -pinDir dbg_clk right -pinY dbg_clk 40R -pinBusDir dbg_bus right -pinBusY dbg_bus 60R -pinDir c0_ddr4_ui_clk left -pinY c0_ddr4_ui_clk 400L -pinDir c0_ddr4_ui_clk_sync_rst left -pinY c0_ddr4_ui_clk_sync_rst 420L -pinDir c0_ddr4_aresetn left -pinY c0_ddr4_aresetn 440L -pinDir c0_ddr4_interrupt right -pinY c0_ddr4_interrupt 80R -pinDir sys_rst left -pinY sys_rst 380L
+preplace inst ddr4_reset -pg 1 -lvl 3 -x 880 -y 460 -swap {1 0 2 3 4 5 6 7 8 9} -defaultsOSRD -pinDir slowest_sync_clk right -pinY slowest_sync_clk 20R -pinDir ext_reset_in right -pinY ext_reset_in 0R -pinDir aux_reset_in left -pinY aux_reset_in 0L -pinDir mb_debug_sys_rst left -pinY mb_debug_sys_rst 20L -pinDir dcm_locked left -pinY dcm_locked 40L -pinDir mb_reset right -pinY mb_reset 40R -pinBusDir bus_struct_reset right -pinBusY bus_struct_reset 60R -pinBusDir peripheral_reset right -pinBusY peripheral_reset 80R -pinBusDir interconnect_aresetn right -pinBusY interconnect_aresetn 100R -pinBusDir peripheral_aresetn right -pinBusY peripheral_aresetn 120R
+preplace inst ddr4_axi_interconnect -pg 1 -lvl 4 -x 1310 -y 200 -swap {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 76 74 77 75 78 79} -defaultsOSRD -pinDir S00_AXI left -pinY S00_AXI 0L -pinDir M00_AXI right -pinY M00_AXI 0R -pinDir ACLK left -pinY ACLK 60L -pinDir ARESETN left -pinY ARESETN 20L -pinDir S00_ACLK left -pinY S00_ACLK 80L -pinDir S00_ARESETN left -pinY S00_ARESETN 40L -pinDir M00_ACLK left -pinY M00_ACLK 100L -pinDir M00_ARESETN left -pinY M00_ARESETN 120L
+preplace inst system_reset_100mhz -pg 1 -lvl 2 -x 490 -y 280 -swap {0 4 1 2 3 5 6 9 8 7} -defaultsOSRD -pinDir slowest_sync_clk left -pinY slowest_sync_clk 20L -pinDir ext_reset_in left -pinY ext_reset_in 100L -pinDir aux_reset_in left -pinY aux_reset_in 40L -pinDir mb_debug_sys_rst left -pinY mb_debug_sys_rst 60L -pinDir dcm_locked left -pinY dcm_locked 80L -pinDir mb_reset right -pinY mb_reset 0R -pinBusDir bus_struct_reset right -pinBusY bus_struct_reset 20R -pinBusDir peripheral_reset right -pinBusY peripheral_reset 100R -pinBusDir interconnect_aresetn right -pinBusY interconnect_aresetn 60R -pinBusDir peripheral_aresetn right -pinBusY peripheral_aresetn 40R
+preplace inst clock_buffer_100mhz -pg 1 -lvl 1 -x 130 -y 300 -defaultsOSRD -pinDir CLK_IN_D left -pinY CLK_IN_D 0L -pinDir CLK_IN_D.IBUF_DS_P left -pinY CLK_IN_D.IBUF_DS_P 20L -pinDir CLK_IN_D.IBUF_DS_N left -pinY CLK_IN_D.IBUF_DS_N 40L -pinBusDir IBUF_OUT right -pinBusY IBUF_OUT 0R
+preplace inst controller_0 -pg 1 -lvl 3 -x 880 -y 60 -swap {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 37 36} -defaultsOSRD -pinDir M_AXI right -pinY M_AXI 20R -pinDir M_AXI_ACLK left -pinY M_AXI_ACLK 20L -pinDir M_AXI_ARESETN left -pinY M_AXI_ARESETN 0L
+preplace inst system_interconnect -pg 1 -lvl 4 -x 1310 -y 500 -swap {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 40 39 38 41 42} -defaultsOSRD -pinDir S00_AXI left -pinY S00_AXI 0L -pinDir M00_AXI right -pinY M00_AXI 0R -pinDir ACLK left -pinY ACLK 20L -pinDir ARESETN left -pinY ARESETN 80L -pinDir S00_ACLK left -pinY S00_ACLK 60L -pinDir S00_ARESETN left -pinY S00_ARESETN 40L -pinDir M00_ACLK left -pinY M00_ACLK 100L -pinDir M00_ARESETN left -pinY M00_ARESETN 120L
+preplace inst ddr_control_0 -pg 1 -lvl 3 -x 880 -y 260 -swap {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 21 20} -defaultsOSRD -pinDir M_AXI right -pinY M_AXI 20R -pinDir M_AXI_ACLK left -pinY M_AXI_ACLK 20L -pinDir M_AXI_ARESETN left -pinY M_AXI_ARESETN 0L
+preplace netloc ddr4_ram_c0_ddr4_ui_clk 1 3 2 1120 400 1500
+preplace netloc ddr4_ram_c0_ddr4_ui_clk_sync_rst 1 3 2 1140J 420 1480
+preplace netloc ext_reset_in_0_1 1 0 2 -30J 400 300J
+preplace netloc system_reset_100mhz_interconnect_aresetn 1 2 2 NJ 340 1080
+preplace netloc system_reset_100mhz_peripheral_aresetn 1 2 2 670 400 1080
+preplace netloc util_ds_buf_0_IBUF_OUT 1 1 3 280 440 690 360 1160
+preplace netloc system_reset_100mhz_peripheral_reset 1 2 3 NJ 380 NJ 380 1520J
+preplace netloc ddr4_reset_peripheral_aresetn 1 3 2 1060 440 1460
+preplace netloc IBUF_DS_P_0_1 1 0 1 N 320
+preplace netloc IBUF_DS_N_0_1 1 0 1 N 340
+preplace netloc C0_SYS_CLK_0_1 1 0 5 NJ 140 NJ 140 NJ 140 NJ 140 NJ
+preplace netloc controller_0_M_AXI 1 3 1 1160 80n
+preplace netloc ddr4_0_C0_DDR4 1 5 1 N 140
+preplace netloc ddr4_axi_interconnect_M00_AXI 1 4 1 N 200
+preplace netloc system_interconnect_M00_AXI 1 4 1 N 500
+preplace netloc ddr_control_0_M_AXI 1 3 1 1100 280n
+levelinfo -pg 1 -50 130 490 880 1310 1710 1920
+pagesize -pg 1 -db -bbox -sgen -220 0 2010 680
+",
+   "No Loops_ScaleFactor":"0.831758",
+   "No Loops_TopLeft":"-220,-182",
+   "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace port ddr4 -pg 1 -lvl 3 -x 830 -y 60 -defaultsOSRD
+preplace port ddr4_refclk -pg 1 -lvl 0 -x 0 -y 80 -defaultsOSRD
+preplace inst ddr4_ram -pg 1 -lvl 1 -x 230 -y 120 -defaultsOSRD
+preplace inst ddr4_reset -pg 1 -lvl 2 -x 630 -y 180 -defaultsOSRD
+preplace netloc ddr4_ram_c0_ddr4_ui_clk_sync_rst 1 1 1 N 160
+preplace netloc ddr4_ram_c0_ddr4_ui_clk 1 1 1 N 140
+preplace netloc ddr4_0_C0_DDR4 1 1 2 NJ 60 NJ
+preplace netloc C0_SYS_CLK_0_1 1 0 1 N 80
+levelinfo -pg 1 0 230 630 830
+pagesize -pg 1 -db -bbox -sgen -130 0 920 280
+"
+}
+0
