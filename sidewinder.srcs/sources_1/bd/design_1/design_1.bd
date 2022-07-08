@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x77EBA0487DE651C9",
+      "boundary_crc": "0x8065F83C2E11E6A1",
       "device": "xczu19eg-ffvc1760-2-i",
       "gen_directory": "../../../../sidewinder.gen/sources_1/bd/design_1",
       "name": "design_1",
@@ -143,7 +143,10 @@
       "pb_go": {
         "direction": "I"
       },
-      "heartbeat": {
+      "led_heartbeat": {
+        "direction": "O"
+      },
+      "led_alarm": {
         "direction": "O"
       }
     },
@@ -1486,7 +1489,10 @@
           "BUTTON": {
             "direction": "I"
           },
-          "LED": {
+          "HEARTBEAT": {
+            "direction": "O"
+          },
+          "ALARM": {
             "direction": "O"
           },
           "M_AXI_ACLK": {
@@ -1659,10 +1665,16 @@
           "system_reset_100mhz/ext_reset_in"
         ]
       },
+      "logic_controller_ALARM": {
+        "ports": [
+          "logic_controller/ALARM",
+          "led_alarm"
+        ]
+      },
       "logic_controller_LED": {
         "ports": [
-          "logic_controller/LED",
-          "heartbeat"
+          "logic_controller/HEARTBEAT",
+          "led_heartbeat"
         ]
       },
       "system_reset_100mhz_interconnect_aresetn": {

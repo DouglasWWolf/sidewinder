@@ -272,8 +272,8 @@ set_property PACKAGE_PIN AY12 [get_ports { ddr4_dm_n[7] }]
 set_property PACKAGE_PIN BA23 [get_ports { ddr4_dm_n[8] }]
 
 
-set_property  -dict {PACKAGE_PIN B5 IOSTANDARD LVCMOS33} [get_ports { heartbeat }] ;# LED0
-
+set_property  -dict {PACKAGE_PIN B5 IOSTANDARD LVCMOS33} [get_ports { led_heartbeat }] ;# LED0
+set_property  -dict {PACKAGE_PIN A5 IOSTANDARD LVCMOS33} [get_ports { led_alarm     }] ;# LED1
 
 #######################################
 # I/O standard definitions
@@ -281,5 +281,5 @@ set_property  -dict {PACKAGE_PIN B5 IOSTANDARD LVCMOS33} [get_ports { heartbeat 
 
 set_property IOSTANDARD LVDS_25  [get_ports clk_100mhz*]
 set_property IOSTANDARD LVCMOS33 [get_ports pb_*]
-#set_property IOSTANDARD LVCMOS33 [get_ports led*]
+
 

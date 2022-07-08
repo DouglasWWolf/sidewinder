@@ -24,7 +24,8 @@ module controller#
 )
 (
     input BUTTON,
-    output LED,
+    output HEARTBEAT, ALARM,
+
 
     //=================== From here down is the AXI4 interface =================
     input wire  M_AXI_ACLK,
@@ -288,39 +289,81 @@ module controller#
 
     //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
     //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
-    //                                   End of AXI transaction login
+    //                                   End of AXI transaction logic
     //
     //                             From here down is module-specific logic
     //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
     //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
     
+    localparam BLOCK_SIZE = 16;
+
     // Assign some convenient (and standard) names to the clock and reset lines
     wire clk    = M_AXI_ACLK;
     wire resetn = M_AXI_ARESETN;
 
+    // An AXI address that increments by 64 bytes (512 bits) on every clock cycle
+    reg[AXI_ADDR_WIDTH-1:0] random_addr = 0;
+    always @(posedge clk) random_addr <= random_addr + 64;
+
+    reg[AXI_DATA_WIDTH-1:0] free_timer;
+    always @(posedge clk) free_timer <= free_timer + 1;
+   
+    reg[AXI_DATA_WIDTH-1:0] data[0:BLOCK_SIZE-1];
+
     reg[2:0] state;
+    reg[15:0] index;
+    reg[AXI_ADDR_WIDTH-1:0] first_addr;
+
+    reg alarm;  assign ALARM = alarm;
+
     always @(posedge clk) begin
         amci_write <= 0;
         amci_read  <= 0;
         if (resetn == 0) begin
             state <= 0;
+            alarm <= 1;
         end else case(state)
 
         0:  if (BUTTON) begin
-                amci_waddr <= 0;
-                amci_wdata <= 512'h12345678;
-                amci_write <= 1;
-                state      <= state + 1;
+                alarm   <= 0;
+                state   <= 1;
             end
 
-        1:  if (amci_widle) begin
-                amci_raddr <= 0;
-                amci_read  <= 1;
-                state      <= state + 1;
+        1:  begin
+                first_addr  <= random_addr;
+                amci_waddr  <= random_addr;
+                amci_wdata  <= free_timer;
+                data[0]     <= free_timer;
+                amci_write  <= 1;
+                state       <= state + 1;
+                index       <= 1;
             end
 
-        2:  if (amci_ridle) begin
-                state <= 0;
+        2:  if (amci_widle) begin
+                if (index == BLOCK_SIZE) begin
+                    amci_raddr <= first_addr;
+                    amci_read  <= 1;
+                    index      <= 0;
+                    state      <= state + 1;
+                end else begin
+                    amci_waddr  <= amci_waddr + 64;
+                    amci_wdata  <= free_timer;
+                    data[index] <= free_timer;
+                    amci_write  <= 1;
+                    index       <= index + 1;
+                end
+            end
+
+        3:  if (amci_ridle) begin
+                if (amci_rdata == data[index]) begin
+                    if (index == BLOCK_SIZE -1)
+                        state <= 1;
+                    else begin
+                        index      <= index + 1;
+                        amci_raddr <= amci_raddr + 64;
+                        amci_read  <= 1;
+                    end
+                end else alarm <= 1;
             end
  
         endcase
@@ -330,18 +373,18 @@ module controller#
 
 
 
-    reg led = 0;
-    reg[31:0] counter = 0;
-    assign LED = led;
+    reg heartbeat = 0;
+    reg[31:0] blink_counter = 0;
+    assign HEARTBEAT = heartbeat;
 
     always @(posedge clk) begin
         if (resetn == 0)
-            counter <= 0;
-        else if (counter)
-            counter <= counter - 1;
+            blink_counter <= 0;
+        else if (blink_counter)
+            blink_counter <= blink_counter - 1;
         else begin
-            led     <= ~led;
-            counter <= 20000000;
+            heartbeat     <= ~heartbeat;
+            blink_counter <= 20000000;
         end
     end
 
