@@ -27,8 +27,8 @@ set_clock_groups -name sys_clk_100 -asynchronous -group [get_clocks sysclk100]
 # ######################################
 #  Miscellaneous
 # ######################################
-set_property  PACKAGE_PIN  B6    [get_ports {  pb_rst_n }]  ;# PB_SW0
-#set_property  PACKAGE_PIN  A3    [get_ports {pb_sw[1]}]
+set_property  PACKAGE_PIN  B6    [get_ports pb_rst_n]  ;# PB_SW0
+set_property  PACKAGE_PIN  A3    [get_ports pb_go   ]  ;# PB_SW1
 #set_property  PACKAGE_PIN  B3    [get_ports {  pb_sw[2]                  }]
 #set_property  PACKAGE_PIN  B5    [get_ports {  led[0]                    }]
 #set_property  PACKAGE_PIN  A5    [get_ports {  led[1]                    }]
@@ -271,6 +271,8 @@ set_property PACKAGE_PIN AV17 [get_ports { ddr4_dm_n[6] }]
 set_property PACKAGE_PIN AY12 [get_ports { ddr4_dm_n[7] }]
 set_property PACKAGE_PIN BA23 [get_ports { ddr4_dm_n[8] }]
 
+
+set_property  -dict {PACKAGE_PIN B5 IOSTANDARD LVCMOS33} [get_ports { heartbeat }] ;# LED0
 
 
 #######################################

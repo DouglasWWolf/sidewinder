@@ -23,9 +23,10 @@ module controller#
     parameter integer AXI_ADDR_WIDTH = 34
 )
 (
-   
+    input BUTTON,
+    output LED,
 
-    //================ From here down is the AXI4-Lite interface ===============
+    //=================== From here down is the AXI4 interface =================
     input wire  M_AXI_ACLK,
     input wire  M_AXI_ARESETN,
         
@@ -83,12 +84,19 @@ module controller#
 
 );
 
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+    //                From here to the next marker is generic AXI transaction logic
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+
+
     localparam AXI_DATA_BYTES = (AXI_DATA_WIDTH/8);
 
     // Assign all of the "write transaction" signals that aren't in the AXI4-Lite spec
     assign M_AXI_AWID    = 1;   // Arbitrary ID
     assign M_AXI_AWLEN   = 0;   // Burst length of 1
-    assign M_AXI_AWSIZE  = 2;   // 2 = 4 bytes per burst (assuming a 32-bit AXI data-bus)
+    assign M_AXI_AWSIZE  = 6;   // 6 = 64 bytes per burst (assuming  512-bit AXI data)
     assign M_AXI_WLAST   = 1;   // Each beat is always the last beat of the burst
     assign M_AXI_AWBURST = 1;   // Each beat of the burst increments by 1 address (ignored)
     assign M_AXI_AWLOCK  = 0;   // Normal signaling
@@ -99,7 +107,7 @@ module controller#
     assign M_AXI_ARLOCK  = 0;   // Normal signaling
     assign M_AXI_ARID    = 1;   // Arbitrary ID
     assign M_AXI_ARLEN   = 0;   // Burst length of 1
-    assign M_AXI_ARSIZE  = 2;   // 2 = 4 bytes per burst (assuming a 32-bit AXI data-bus)
+    assign M_AXI_ARSIZE  = 6;   // 6 = 64 bytes per burst (assuming 512-bit AXI data)
     assign M_AXI_ARBURST = 1;   // Increment address on each beat of the burst (unused)
     assign M_AXI_ARCACHE = 2;   // Normal, no cache, no buffer
     assign M_AXI_ARQOS   = 0;   // Lowest quality of service (unused)
@@ -277,6 +285,66 @@ module controller#
         endcase
     end
     //=========================================================================================================
+
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+    //                                   End of AXI transaction login
+    //
+    //                             From here down is module-specific logic
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+    //<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><
+    
+    // Assign some convenient (and standard) names to the clock and reset lines
+    wire clk    = M_AXI_ACLK;
+    wire resetn = M_AXI_ARESETN;
+
+    reg[2:0] state;
+    always @(posedge clk) begin
+        amci_write <= 0;
+        amci_read  <= 0;
+        if (resetn == 0) begin
+            state <= 0;
+        end else case(state)
+
+        0:  if (BUTTON) begin
+                amci_waddr <= 0;
+                amci_wdata <= 512'h12345678;
+                amci_write <= 1;
+                state      <= state + 1;
+            end
+
+        1:  if (amci_widle) begin
+                amci_raddr <= 0;
+                amci_read  <= 1;
+                state      <= state + 1;
+            end
+
+        2:  if (amci_ridle) begin
+                state <= 0;
+            end
+ 
+        endcase
+    
+    end
+
+
+
+
+    reg led = 0;
+    reg[31:0] counter = 0;
+    assign LED = led;
+
+    always @(posedge clk) begin
+        if (resetn == 0)
+            counter <= 0;
+        else if (counter)
+            counter <= counter - 1;
+        else begin
+            led     <= ~led;
+            counter <= 20000000;
+        end
+    end
+
 
 
 endmodule

@@ -1,7 +1,7 @@
 //Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2021.1 (lin64) Build 3247384 Thu Jun 10 19:36:07 MDT 2021
-//Date        : Thu Jul  7 16:22:57 2022
+//Date        : Thu Jul  7 19:55:44 2022
 //Host        : simtool5-2 running 64-bit Ubuntu 20.04.4 LTS
 //Command     : generate_target design_1_wrapper.bd
 //Design      : design_1_wrapper
@@ -28,6 +28,8 @@ module design_1_wrapper
     ddr4_refclk_clk_n,
     ddr4_refclk_clk_p,
     ddr4_reset_n,
+    heartbeat,
+    pb_go,
     pb_rst_n);
   input [0:0]clk_100mhz_clk_n;
   input [0:0]clk_100mhz_clk_p;
@@ -47,6 +49,8 @@ module design_1_wrapper
   input ddr4_refclk_clk_n;
   input ddr4_refclk_clk_p;
   output ddr4_reset_n;
+  output heartbeat;
+  input pb_go;
   input pb_rst_n;
 
   wire [0:0]clk_100mhz_clk_n;
@@ -67,6 +71,8 @@ module design_1_wrapper
   wire ddr4_refclk_clk_n;
   wire ddr4_refclk_clk_p;
   wire ddr4_reset_n;
+  wire heartbeat;
+  wire pb_go;
   wire pb_rst_n;
 
   design_1 design_1_i
@@ -88,5 +94,7 @@ module design_1_wrapper
         .ddr4_refclk_clk_n(ddr4_refclk_clk_n),
         .ddr4_refclk_clk_p(ddr4_refclk_clk_p),
         .ddr4_reset_n(ddr4_reset_n),
+        .heartbeat(heartbeat),
+        .pb_go(pb_go),
         .pb_rst_n(pb_rst_n));
 endmodule
